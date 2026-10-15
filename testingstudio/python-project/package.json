@@ -1,0 +1,7 @@
+{
+  "name":"testingstudio-web",
+  "version":"2.0.0",
+  "private":true,
+  "scripts":{"test":"node scripts/test_wasm.cjs"},
+  "devDependencies":{"pyodide":"0.27.7"}
+}

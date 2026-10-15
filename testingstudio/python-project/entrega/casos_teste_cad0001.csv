@@ -1,0 +1,25 @@
+﻿ID;Técnica;Alvo;Ponto;p1;p2;p3;Esperado (oráculo);Simulado (TXT original);Comparação
+CT01;AVL / PCE;val_param1;On-Point;0,00;10,00;5,00;5,00;5,00;Conforme
+CT02;AVL / PCE;val_param1;Off-Point;-0,01;10,00;5,00;-1,00;4,90;Divergente
+CT03;AVL / PCE;val_param1;Interior;100,00;10,00;5,00;1005,00;1005,00;Conforme
+CT04;AVL / PCE;val_param1;Exterior;-100,00;10,00;5,00;-1,00;-995,00;Divergente
+CT05;AVL / PCE;val_param1;Vizinho válido;0,01;10,00;5,00;5,10;5,10;Conforme
+CT06;AVL / PCE;val_param2;On-Point;1,00;0,00;5,00;5,00;5,00;Conforme
+CT07;AVL / PCE;val_param2;Off-Point;1,00;-0,01;5,00;-1,00;4,99;Divergente
+CT08;AVL / PCE;val_param2;Interior;1,00;100,00;5,00;105,00;105,00;Conforme
+CT09;AVL / PCE;val_param2;Exterior;1,00;-100,00;5,00;-1,00;-95,00;Divergente
+CT10;AVL / PCE;val_param2;Vizinho válido;1,00;0,01;5,00;5,01;5,01;Conforme
+CT11;AVL / PCE;val_param3;On-Point;1,00;10,00;0,00;10,00;10,00;Conforme
+CT12;AVL / PCE;val_param3;Off-Point;1,00;10,00;-0,01;-1,00;9,99;Divergente
+CT13;AVL / PCE;val_param3;Interior;1,00;10,00;100,00;110,00;110,00;Conforme
+CT14;AVL / PCE;val_param3;Exterior;1,00;10,00;-100,00;-1,00;-90,00;Divergente
+CT15;AVL / PCE;val_param3;Vizinho válido;1,00;10,00;0,01;10,01;10,01;Conforme
+CT16;PCE;val_param1;NULL isolado;NULL;10,00;5,00;5,00;5,00;Conforme
+CT17;PCE;val_param2;NULL isolado;1,00;NULL;5,00;5,00;5,00;Conforme
+CT18;PCE;val_param3;NULL isolado;1,00;10,00;NULL;10,00;10,00;Conforme
+CT19;PCE / combinação;Conjunto;Fórmula;2,00;3,00;4,00;10,00;10,00;Conforme
+CT20;PCE / combinação;Conjunto;Todos zero;0,00;0,00;0,00;0,00;0,00;Conforme
+CT21;PCE / combinação;Conjunto;Todos NULL;NULL;NULL;NULL;0,00;0,00;Conforme
+CT22;PCE / combinação;Conjunto;Dois negativos;-2,00;-3,00;4,00;-1,00;10,00;Divergente
+CT23;PCE / combinação;Conjunto;Negativo com multiplicador zero;-2,00;0,00;4,00;-1,00;4,00;Divergente
+CT24;PCE / combinação;Conjunto;Decimais exatos;1,25;2,00;0,50;3,00;3,00;Conforme

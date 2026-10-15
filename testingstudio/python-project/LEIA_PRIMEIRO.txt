@@ -1,0 +1,18 @@
+TESTINGSTUDIO WEB - VERSAO 2.0
+
+Tema preto e tres modulos do kickoff:
+1. Caixa-preta: PCE, AVL e epsilon calculado.
+2. Caixa-branca: grafo de controle e McCabe.
+3. Def-Uso e mutacao: rastreamento, cobertura e Mutation Score.
+
+PAGINA WEB: a pasta docs usa Python/WASM no navegador, sem instalar Python no PC do visitante.
+Os exemplos iniciais sao pre-calculados e identificados. Clique em Analisar em Python para executar.
+O primeiro carregamento exige internet e acesso ao CDN do Pyodide.
+
+GEMINI: a integracao protegida fica no app Python/Streamlit. Para acessa-la de qualquer PC,
+hospede app.py no Streamlit Community Cloud e use a URL emitida. Nao ha chave neste pacote.
+
+NO WINDOWS: abra iniciar.bat para usar o app local. Python 3.10+ e internet sao necessarios
+na primeira instalacao. O instalador usa pandas 2.3.3 e pacotes prontos, sem compilacao.
+
+Veja README.md para publicar, testar e entender os limites do interpretador.

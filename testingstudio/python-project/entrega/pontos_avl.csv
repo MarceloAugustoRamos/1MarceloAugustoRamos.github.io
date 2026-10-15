@@ -1,0 +1,6 @@
+﻿Ponto;Valor;Valor decimal;Condição;Esperado
+Exterior;-100.0;-100,00;Região inválida;Erro: -1
+Off-Point;-0.01;-0,01;0,00 − ε;Erro: -1
+On-Point;0.0;0,00;Fronteira válida;Sucesso: calcular
+Vizinho válido;0.01;0,01;0,00 + ε (complementar);Sucesso: calcular
+Interior;100.0;100,00;Região válida;Sucesso: calcular
