@@ -526,9 +526,18 @@ def graph_svg(flow):
         x1, y1 = positions[edge["from"]]
         x2, y2 = positions[edge["to"]]
         color = "#49d7b0" if edge["branch"] == "V" else "#ef9d6c" if edge["branch"] == "F" else "#6e849e"
-        svg.append(f'<path d="M{x1},{y1+28} C{x1},{(y1+y2)/2} {x2},{(y1+y2)/2} {x2},{y2-28}" stroke="{color}" stroke-width="2" fill="none" marker-end="url(#arrow)"/>')
+        if x1 == x2 and y2-y1 > 130:
+            # Desvios que saltam um bloco passam ao lado dos nós intermediários.
+            side = -1 if x1 > 650 else 1
+            bus = x1 + side * 205
+            route = f'M{x1+side*135},{y1} H{bus} V{y2} H{x2+side*135}'
+            label_x = bus + (9 if side > 0 else -17)
+        else:
+            route = f'M{x1},{y1+28} C{x1},{(y1+y2)/2} {x2},{(y1+y2)/2} {x2},{y2-28}'
+            label_x = (x1+x2)/2+8
+        svg.append(f'<path d="{route}" stroke="{color}" stroke-width="2" fill="none" marker-end="url(#arrow)"/>')
         if edge["branch"]:
-            svg.append(f'<text x="{(x1+x2)/2+8}" y="{(y1+y2)/2}" font-family="monospace" font-size="13" fill="{color}">{edge["branch"]}</text>')
+            svg.append(f'<text x="{label_x}" y="{(y1+y2)/2}" font-family="monospace" font-size="13" fill="{color}">{edge["branch"]}</text>')
     for key, node in nodes.items():
         x, yy = positions[key]
         color = "#8a9dff" if node["kind"] == "decision" else "#49d7b0" if node["kind"] in {"entry", "exit"} else "#475b77"

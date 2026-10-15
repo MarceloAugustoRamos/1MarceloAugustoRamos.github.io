@@ -5,7 +5,7 @@ async function initialize() {
   self.postMessage({type:"progress",message:"Carregando o motor Python… A primeira execução precisa de internet."});
   importScripts(CDN + "pyodide.js");
   const python = await loadPyodide({indexURL:CDN});
-  const [analysis, engine] = await Promise.all([fetch("../analysis.py"), fetch("../studio_engine.py")]);
+  const [analysis, engine] = await Promise.all([fetch("../analysis.py",{cache:"no-cache"}), fetch("../studio_engine.py",{cache:"no-cache"})]);
   if (!analysis.ok || !engine.ok) throw new Error("Não foi possível carregar os arquivos do motor Python.");
   python.FS.writeFile("/home/pyodide/analysis.py", await analysis.text());
   await python.runPythonAsync(await engine.text());
