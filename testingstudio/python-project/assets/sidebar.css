@@ -1,0 +1,73 @@
+/* Scoped to Streamlit's sidebar. Native radio inputs retain keyboard navigation. */
+[data-testid="stSidebar"] {
+  background:#0b0f15;
+  border-right:1px solid #202a36;
+  min-width:310px;
+  width:310px;
+}
+[data-testid="stSidebarUserContent"] {padding:18px 18px 26px}
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {gap:12px}
+.studio-brand {display:flex;align-items:center;gap:12px;padding:3px 6px 0;margin-bottom:23px}
+.studio-brand-mark {width:43px;height:43px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid #35594e;border-radius:13px;background:linear-gradient(145deg,#1c342e,#0e1a18);font-family:ui-monospace,Consolas,monospace;font-size:28px;font-weight:700;letter-spacing:-5px;padding-right:5px;color:#c9ffeb}
+.studio-brand-mark span {color:#79e3bb}
+.studio-brand-name {font-size:20px;line-height:1.2;font-weight:700;letter-spacing:-.7px;color:#eef4fa}
+.studio-brand-sub {font-size:8px;letter-spacing:2.4px;color:#7d8da3;margin-top:5px;font-weight:600}
+.studio-workspace {display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #26313f;border-radius:12px;background:linear-gradient(110deg,#141c27,#101720);margin:0 1px 28px}
+.studio-workspace-icon {display:grid;place-items:center;width:34px;height:36px;border-radius:9px;background:#272842;color:#b3b0ed;font-size:11px;font-weight:700;flex-shrink:0}
+.studio-workspace strong {display:block;font-size:12px;color:#e4ebf5;line-height:1.6;font-weight:600}
+.studio-workspace div>span {display:block;font-size:10px;color:#8190a5;line-height:1.6}
+.studio-section-label {font-size:9px;letter-spacing:1.65px;font-weight:650;color:#63758d;margin:0 11px 4px}
+.studio-tools-label {margin-top:20px;margin-bottom:0}
+[data-testid="stSidebar"] [data-testid="stRadio"] {width:100%;padding:0}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] {width:100%;gap:5px}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div {width:100%;margin:0;padding:0}
+[data-testid="stSidebar"] [data-testid="stRadioOption"] {
+  width:100%;box-sizing:border-box;position:relative;display:flex;align-items:center;
+  min-height:47px;margin:0;padding:11px 13px!important;border-radius:10px;
+  border:1px solid transparent;color:#a4b1c4;background:transparent;
+  cursor:pointer;transition:background .16s,border-color .16s,color .16s;
+}
+/* Hide only the decorative dot. The actual input remains in its accessible span. */
+[data-testid="stSidebar"] [data-testid="stRadioOption"]>div {width:100%;gap:0}
+[data-testid="stSidebar"] [data-testid="stRadioOption"]>div>div:first-child:not([data-testid]) {display:none}
+[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] {width:100%}
+[data-testid="stSidebar"] [data-testid="stRadioOption"] p {display:flex;align-items:center;gap:12px;margin:0;font-size:13px;font-weight:450;line-height:24px;color:inherit}
+[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stIconMaterial"] {font-size:21px;color:#75869e}
+[data-testid="stSidebar"] [data-testid="stRadioOption"]:hover {background:#141d29;border-color:#263448;color:#e5edf8}
+[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"],
+[data-testid="stSidebar"] [data-testid="stRadioOption"]:has(input:checked) {
+  background:linear-gradient(100deg,#17372e,#12291f);border-color:#315548;color:#a2f0ce;
+  box-shadow:inset 3px 0 0 #79e3bb;
+}
+[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] p,
+[data-testid="stSidebar"] [data-testid="stRadioOption"]:has(input:checked) p {font-weight:600}
+[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] [data-testid="stIconMaterial"] {color:#79e3bb}
+[data-testid="stSidebar"] [data-testid="stRadioOption"][data-focus-visible="true"],
+[data-testid="stSidebar"] [data-testid="stRadioOption"]:has(input:focus-visible) {outline:2px solid #b9f5df;outline-offset:3px}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div:nth-child(6) {padding-top:12px;margin-top:9px;border-top:1px solid #222d3b}
+[data-testid="stSidebar"] [data-testid="stRadioOption"]::after {position:absolute;right:13px;font-family:ui-monospace,monospace;color:#52647b;font-size:10px;letter-spacing:.5px}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div:nth-child(2) label::after {content:"01"}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div:nth-child(3) label::after {content:"02"}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div:nth-child(4) label::after {content:"03"}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"]>div:nth-child(5) label::after {content:"04"}
+[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"]::after {color:#72b697}
+[data-testid="stSidebar"] [data-testid="stExpander"] details {border:1px solid #263143;border-radius:11px;background:#101722;overflow:hidden}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary {min-height:47px;padding:11px 12px;color:#b3c2d5}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary:hover {background:#182334;color:#eaf5ff}
+[data-testid="stSidebar"] [data-testid="stExpander"] summary p {font-size:12px;font-weight:550}
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {font-size:11px;color:#a7b7ca}
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {font-size:10px;line-height:1.6;color:#7f90a7}
+[data-testid="stSidebar"] input {font-size:12px}
+.studio-sidebar-footer {display:flex;align-items:center;gap:10px;border-top:1px solid #202c3b;margin:21px 5px 0;padding:19px 5px 0}
+.studio-engine-dot {width:6px;height:6px;border-radius:50%;background:#79e3bb;box-shadow:0 0 12px #79e3bb30;flex-shrink:0}
+.studio-sidebar-footer strong {display:block;font-size:11px;color:#c4d3e2;font-weight:550}
+.studio-sidebar-footer div>span {display:block;font-size:9px;color:#73839a;margin-top:3px}
+.studio-sidebar-credit {font-size:10px;color:#576b83;margin:12px 21px 0;letter-spacing:.1px}
+.studio-sidebar-credit span {padding:0 7px;color:#3b4e65}
+@media(max-width:600px) {
+  [data-testid="stSidebar"] {min-width:min(310px,90vw);width:min(310px,90vw);max-width:90vw}
+  [data-testid="stSidebarUserContent"] {padding-left:14px;padding-right:14px}
+}
+@media(prefers-reduced-motion:reduce) {
+  [data-testid="stSidebar"] [data-testid="stRadioOption"] {transition:none}
+}

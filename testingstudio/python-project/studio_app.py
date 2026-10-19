@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -12,9 +11,10 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from analysis import ORIGINAL_SHA256, csv_bytes, read_source
-from gemini_service import DEFAULT_MODEL, AuditError, run_gemini
+from gemini_service import AuditError, run_gemini
 from project_guide import PROTOCOLS, REQUIREMENTS
 from traceability_ui import render_traceability
+from studio_sidebar import render_sidebar
 from studio_engine import AnalysisError, CORRECTED_SAMPLE, analyze, report_markdown
 
 
@@ -62,7 +62,6 @@ def main():
     st.set_page_config(page_title="TestingStudio Web", page_icon="🧪", layout="wide")
     st.markdown('''<style>
     .stApp,[data-testid="stAppViewContainer"]{background:#07090d;color:#edf2fb}
-    [data-testid="stSidebar"]{background:#0c0f15;border-right:1px solid #242c3b}
     .block-container{max-width:1350px;padding-top:2rem}
     h1{letter-spacing:-1.2px}h2,h3{letter-spacing:-.4px}
     [data-testid="stMetric"]{background:#10141c;border:1px solid #293247;border-radius:12px;padding:17px}
@@ -77,29 +76,7 @@ def main():
     st.session_state["original_source"] = original
     if "source_editor" not in st.session_state:
         st.session_state["source_editor"] = original
-    with st.sidebar:
-        st.title("🧪 TestingStudio")
-        st.caption("WEB LABORATORY · v3.0")
-        view = st.radio("Laboratório", ["Visão geral", "Caixa-preta", "Caixa-branca", "Def-Uso e mutação", "Requisitos e RTM", "Gemini", "Entrega"], key="view")
-        st.divider()
-        st.subheader("Configuração da análise")
-        precision = st.selectbox("Casas decimais", ["Automático", "0", "1", "2", "3", "4", "5", "6"], key="precision")
-        lower = st.text_input("Limite inferior válido", "0", key="lower")
-        null_policy = st.selectbox("Hipótese para NULL", ["zero", "reject"],
-                                   format_func=lambda x: "Normalizar para zero" if x == "zero" else "Rejeitar como inválido", key="null_policy")
-        oracle_mode = st.selectbox("Oráculo", ["cad0001", "differential"],
-                                   format_func=lambda x: "Regra CAD0001 do manual" if x == "cad0001" else "Apenas comparação diferencial", key="oracle_mode")
-        with st.expander("Revisão de equivalência"):
-            equivalents = st.text_input("Mutantes equivalentes confirmados", key="equivalents", placeholder="M02, M05")
-            st.caption("Somente após revisão humana. Mutantes mortos não podem ser excluídos.")
-        st.divider()
-        st.subheader("Google AI Studio")
-        api_key = st.text_input("Gemini API Key", type="password", key="api_key")
-        model = st.text_input("Modelo Gemini", os.getenv("GEMINI_MODEL", DEFAULT_MODEL), key="model")
-        st.link_button("Obter chave no AI Studio", "https://aistudio.google.com/apikey")
-        st.caption("A chave fica na sessão do servidor e não entra no repositório ou nas exportações.")
-        st.divider()
-        st.caption("Teste de Software I · Ementa 62371\n\nProf. Frank Piffer · 2026.2")
+    view, precision, lower, null_policy, oracle_mode, equivalents, api_key, model = render_sidebar()
 
     st.caption("WORKSPACE / " + view.upper())
     if view == "Requisitos e RTM":
