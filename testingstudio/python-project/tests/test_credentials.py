@@ -27,6 +27,7 @@ class SavedKeyTests(unittest.TestCase):
         app=self.app()
         self.assertFalse(app.exception)
         self.assertEqual(app.selectbox(key='gemini_key_source').value,'Chave salva no app')
+        self.assertTrue(app.button(key='verify_gemini').disabled)
         with patch('studio_app.run_gemini') as api:
             app.button(key='run_gemini').click().run()
             api.assert_not_called()
@@ -89,3 +90,25 @@ class SavedKeyTests(unittest.TestCase):
         self.assertFalse(is_unlocked(SavedCredentials(TEST_KEY,''),state))
         self.assertNotIn(TEST_KEY,repr(original))
         self.assertNotIn(TEST_PASSWORD,repr(original))
+
+    def test_unlock_does_not_verify_or_generate_automatically(self):
+        with patch('studio_sidebar.check_gemini_access') as verify, patch('studio_app.run_gemini') as generate:
+            app=self.unlock(self.app())
+            verify.assert_not_called()
+            generate.assert_not_called()
+            self.assertTrue(any('liberada' in x.value for x in app.success))
+            self.assertFalse(any('O Google aceitou' in x.value for x in app.success))
+            app.button(key='verify_gemini').click().run()
+            verify.assert_called_once_with(TEST_KEY,'gemini-3.8-flash')
+            generate.assert_not_called()
+            self.assertTrue(any('O Google aceitou' in x.value for x in app.success))
+            self.assertNotIn(TEST_KEY,str([x.value for x in app.success]))
+
+    def test_failed_access_check_never_claims_google_accepted_key(self):
+        from gemini_service import AuditError
+        app=self.unlock(self.app())
+        with patch('studio_sidebar.check_gemini_access',side_effect=AuditError('HTTP 401 · Chave recusada.')):
+            app.button(key='verify_gemini').click().run()
+            self.assertFalse(app.exception)
+            self.assertTrue(any('HTTP 401' in x.value for x in app.error))
+            self.assertFalse(any('O Google aceitou' in x.value for x in app.success))

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from gemini_service import DEFAULT_MODEL
+from gemini_service import AuditError, DEFAULT_MODEL, check_gemini_access
 from gemini_credentials import render_key_connection
 
 VIEWS = {
@@ -38,6 +38,15 @@ def render_sidebar():
             st.caption("GOOGLE AI STUDIO")
             api_key = render_key_connection()
             model = st.text_input("Modelo Gemini", os.getenv("GEMINI_MODEL", DEFAULT_MODEL), key="model")
+            if st.button("Verificar chave e modelo", key="verify_gemini", disabled=not api_key.strip(),
+                         width="stretch", help="Consulta o modelo no Google, sem gerar uma auditoria. Não confirma a cota de geração."):
+                try:
+                    with st.spinner("Consultando acesso no Google..."):
+                        check_gemini_access(api_key, model)
+                    st.success("O Google aceitou a chave e permitiu consultar este modelo.")
+                    st.caption("A auditoria ainda depende da cota de geração disponível.")
+                except AuditError as exc:
+                    st.error(str(exc))
             st.link_button("Obter chave no AI Studio", "https://aistudio.google.com/apikey",
                            icon=":material/open_in_new:", width="stretch")
         with st.expander("Parâmetros da análise", icon=":material/tune:"):

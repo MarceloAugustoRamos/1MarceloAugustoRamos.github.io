@@ -96,6 +96,22 @@ A chave fica nos Secrets do servidor, não é preenchida em um campo do navegado
 entra nas exportações. Bloquear acesso encerra a autorização desta sessão. Alterar a
 chave ou a senha nos Secrets invalida as autorizações anteriores.
 
+Liberar a chave com a senha não valida a autenticação no Google. Em Conexão Gemini,
+use **Verificar chave e modelo**: essa ação consulta somente os metadados do modelo,
+sem gerar uma auditoria. A consulta bem-sucedida não garante cota para gerar conteúdo.
+Nenhuma chamada é feita automaticamente ao abrir a página ou desbloquear a chave.
+Cada ação faz uma tentativa, sem repetições automáticas do SDK.
+
+Se aparecer **HTTP 401**, selecione **Informar minha chave** e verifique a mesma chave
+uma vez. Se funcionar, atualize `GEMINI_API_KEY` nos Secrets, salve, recarregue o app e
+desbloqueie novamente. Se também falhar manualmente, confira no AI Studio se a chave
+está ativa; substitua uma chave inválida, revogada ou bloqueada. A senha de acesso do
+app não substitui a API key. No campo manual, cole somente a chave sem aspas; nos
+Secrets, as aspas delimitam a string TOML.
+
+**HTTP 429** indica limite/cota do projeto: consulte os limites ativos no AI Studio.
+Trocar a chave do mesmo projeto não renova a cota. O motor Python funciona sem Gemini.
+
 O app público permite usar essa chave somente a quem souber a senha. Essa pessoa
 consome a cota do projeto da chave. Escolha uma senha forte e compartilhe-a apenas com
 quem deve ter esse acesso. Sem senha de pelo menos 12 caracteres, a chave do servidor

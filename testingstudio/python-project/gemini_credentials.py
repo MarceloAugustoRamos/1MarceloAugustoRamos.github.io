@@ -68,7 +68,8 @@ def render_key_connection():
         source = st.selectbox("Chave para a auditoria", [SAVED_SOURCE, MANUAL_SOURCE], key="gemini_key_source")
         if source == SAVED_SOURCE:
             if is_unlocked(config, st.session_state):
-                st.success("Chave salva conectada nesta sessão.")
+                st.success("Chave salva liberada nesta sessão.")
+                st.caption("Senha aceita. Use Verificar chave e modelo para consultar o acesso no Google.")
                 st.button("Bloquear acesso", icon=":material/lock:", key="gemini_saved_lock", on_click=lock_saved_key)
                 # A chave nunca é colocada em um widget, cookie ou exportação.
                 return config.api_key
@@ -79,11 +80,13 @@ def render_key_connection():
             if st.session_state.get(ERROR_STATE):
                 st.error(st.session_state[ERROR_STATE])
             st.caption("A chave fica no servidor. A senha libera seu uso somente nesta sessão.")
+            st.caption("A senha tem pelo menos 12 caracteres e é diferente da API key copiada do AI Studio.")
             return ""
     elif config.api_key:
         st.warning("Configure GEMINI_ACCESS_PASSWORD com pelo menos 12 caracteres nos Secrets para liberar a chave salva.")
 
-    key = st.text_input("Gemini API Key", type="password", key="api_key", placeholder="Informe sua chave")
+    key = st.text_input("Gemini API Key", type="password", key="api_key", placeholder="Cole a chave do Google AI Studio",
+                        help="Cole somente a chave, sem aspas ou parênteses. Este campo não recebe a senha de acesso do app.")
     st.caption("Chave adicionada nesta sessão." if key.strip() else "A chave digitada é usada somente nesta sessão.")
     if not config.ready:
         st.caption("Para salvar uma vez: configure GEMINI_API_KEY e GEMINI_ACCESS_PASSWORD em Settings → Secrets do Streamlit.")

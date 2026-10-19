@@ -5,10 +5,44 @@ from __future__ import annotations
 from analysis import NULL_POLICIES, build_report
 
 DEFAULT_MODEL = "gemini-3.8-flash"
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
 
 
 class AuditError(Exception):
     """Mensagem curta e segura para mostrar na interface."""
+
+
+def _client(api_key: str):
+    """Cliente exclusivo do AI Studio, sem redirecionamento por variáveis de ambiente."""
+    key = api_key.strip()
+    if not key:
+        raise AuditError("Insira sua Gemini API Key na barra lateral.")
+    if any(character.isspace() for character in key) or any(character in key for character in '\"\'()'):
+        raise AuditError("A chave contém espaços, aspas ou parênteses. No campo do app, cole somente a chave. Nos Secrets, use aspas como delimitadores TOML, sem incluí-las no valor.")
+    if key in {"SUA_CHAVE_AQUI", "COLE_SUA_CHAVE_AQUI", "SUA_CHAVE_DO_GEMINI", "COLE_AQUI_A_CHAVE_REAL_DO_GOOGLE"}:
+        raise AuditError("O exemplo dos Secrets precisa ser substituído pela chave real copiada do Google AI Studio.")
+    from google import genai
+    from google.genai import types
+    return genai.Client(
+        api_key=key, vertexai=False,
+        http_options=types.HttpOptions(
+            timeout=90000, base_url=GEMINI_BASE_URL,
+            retry_options=types.HttpRetryOptions(attempts=1),
+        ),
+    )
+
+
+def check_gemini_access(api_key: str, model: str) -> None:
+    """Consulta apenas os metadados do modelo; não gera conteúdo nem atesta cota."""
+    if not model.strip():
+        raise AuditError("Informe o nome do modelo Gemini na barra lateral.")
+    try:
+        with _client(api_key) as client:
+            client.models.get(model=model.strip())
+    except AuditError:
+        raise
+    except Exception as exc:
+        raise AuditError(error_message(exc)) from None
 
 
 def build_prompt(source: str, digest: str, null_policy: str, simulation_available: bool,
@@ -73,10 +107,10 @@ def error_message(error: Exception) -> str:
     code = getattr(error, "code", None)
     messages = {
         400: "Solicitação recusada. Confira a chave, o modelo e a disponibilidade da API na sua conta.",
-        401: "Autenticação recusada. Confira sua chave no Google AI Studio.",
+        401: "HTTP 401 · O Google recusou a API key. A senha de acesso do app não é a API key. Confira GEMINI_API_KEY nos Secrets ou teste a opção Informar minha chave. Se a chave também falhar manualmente, confira se está válida e ativa no Google AI Studio.",
         403: "Acesso recusado. Confira a chave e as permissões do projeto no Google AI Studio.",
         404: "Modelo indisponível para sua conta. Informe na barra lateral um modelo habilitado no AI Studio.",
-        429: "Limite de uso ou cota atingido. Confira a cota no AI Studio e tente novamente depois.",
+        429: "HTTP 429 · Limite de uso ou cota atingido. Consulte os limites do projeto no AI Studio e aguarde a renovação do limite atingido. Gerar outra chave do mesmo projeto não renova a cota. As análises Python continuam disponíveis.",
         500: "O Gemini apresentou erro interno. Tente novamente depois.",
         503: "O Gemini está temporariamente indisponível. Tente novamente depois.",
     }
@@ -90,12 +124,11 @@ def run_gemini(api_key: str, model: str, source: str, digest: str,
         raise AuditError("Insira sua Gemini API Key na barra lateral.")
     if not model.strip():
         raise AuditError("Informe o nome do modelo Gemini na barra lateral.")
-    from google import genai
     from google.genai import types
 
     prompt = build_prompt(source, digest, null_policy, simulation_available, studio_result, nl_requirements)
     try:
-        with genai.Client(api_key=api_key.strip(), http_options=types.HttpOptions(timeout=90000)) as client:
+        with _client(api_key) as client:
             response = client.models.generate_content(
                 model=model.strip(), contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.1, max_output_tokens=10000),
