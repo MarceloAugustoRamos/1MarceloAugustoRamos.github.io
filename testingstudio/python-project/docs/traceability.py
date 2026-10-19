@@ -264,6 +264,8 @@ def browser_traceability(payload_json):
             raise TraceabilityError("Entrada RTM excede o limite didático.")
         payload = json.loads(payload_json)
         result = analyze_traceability(payload["scenario"], payload.get("executions"))
+        if payload.get("execution_scenario_hash") is not None and payload["execution_scenario_hash"] != result["scenario_hash"]:
+            raise TraceabilityError("Os registros de execução pertencem a outro cenário. Recalcule sem reutilizá-los.")
         return json.dumps({"ok": True, "result": result}, ensure_ascii=False, allow_nan=False)
     except (TraceabilityError, ValueError, TypeError, KeyError, RecursionError):
         import sys

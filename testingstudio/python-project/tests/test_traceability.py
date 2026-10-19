@@ -86,3 +86,11 @@ class TraceabilityTests(unittest.TestCase):
     def test_nonfinite_data_rejected(self):
         s=self.scenario();s['use_cases'][0]['flows'][0]['data']=[{'n':float('nan')}]
         with self.assertRaises(ValueError):analyze_traceability(s)
+
+    def test_browser_rejects_results_from_changed_scenario(self):
+        scenario=self.scenario()
+        old=analyze_traceability(scenario)["scenario_hash"]
+        scenario["title"]="Outro cenário"
+        data=json.loads(browser_traceability(json.dumps({"scenario":scenario,"executions":{"CT01":{"status":"Aprovado","evidence":"Evidência anterior."}},"execution_scenario_hash":old})))
+        self.assertFalse(data["ok"])
+        self.assertIn("outro cenário",data["error"])

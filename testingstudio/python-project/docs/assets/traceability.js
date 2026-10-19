@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded",()=>{
     $("rtm-gaps").textContent="Requisitos sem CT: "+(result.uncovered_requirements.join(", ")||"nenhum")+". CTs sem requisito: "+(result.orphan_tests.join(", ")||"nenhum")+".";$("rtm-method").textContent=result.method;
     $("rtm-save-execution").disabled=dirty||busy||!result.cases.length;
   }
-  async function calculate(scenario,nextExecutions={},executionOnly=false){
+  async function calculate(scenario,nextExecutions={},executionOnly=false,executionHash=null){
     if(busy)return;busy=true;$("rtm-run").disabled=true;$("rtm-save-execution").disabled=true;$("rtm-editor").disabled=true;$("rtm-reset").disabled=true;$("rtm-file").disabled=true;
     const status=executionOnly?$("rtm-execution-notice"):$("rtm-notice");status.textContent="Processando no motor Python…";
-    try{const data=await window.runStudioPython("rtm",{scenario,executions:nextExecutions},m=>{status.textContent=m;});result=data;source=scenario;sourceKey=JSON.stringify(scenario);executions=nextExecutions;dirty=false;provenance="Python executado";status.textContent=executionOnly?"Resultado manual registrado. Confira as evidências exportadas.":"CTs derivados e RTM recalculada em Python. Cobertura planejada não comprova execução.";render();}
+    try{const data=await window.runStudioPython("rtm",{scenario,executions:nextExecutions,execution_scenario_hash:executionHash},m=>{status.textContent=m;});result=data;source=scenario;sourceKey=JSON.stringify(scenario);executions=nextExecutions;dirty=false;provenance="Python executado";status.textContent=executionOnly?"Resultado manual registrado. Confira as evidências exportadas.":"CTs derivados e RTM recalculada em Python. Cobertura planejada não comprova execução.";render();}
     catch(e){status.textContent=e.message;status.classList.add("rtm-error");}
     finally{busy=false;$("rtm-run").disabled=false;$("rtm-save-execution").disabled=dirty||!result.cases.length;$("rtm-editor").disabled=false;$("rtm-reset").disabled=false;$("rtm-file").disabled=false;}
   }
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("rtm-editor").value=JSON.stringify(source,null,2);$("rtm-editor").addEventListener("input",setDirty);
   $("rtm-run").addEventListener("click",()=>{try{const scenario=JSON.parse($("rtm-editor").value);calculate(scenario,JSON.stringify(scenario)===sourceKey?executions:{});}catch{notice("JSON inválido. Confira aspas, vírgulas e listas no cenário.",true);}});
   $("rtm-reset").addEventListener("click",()=>{$("rtm-editor").value=JSON.stringify(sample.scenario,null,2);setDirty();});
-  $("rtm-file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;if(file.size>360000){notice("Importe um projeto de até 360 KB.",true);return;}try{const data=JSON.parse(await file.text()),scenario=data.scenario||data;$("rtm-editor").value=JSON.stringify(scenario,null,2);setDirty();await calculate(scenario,data.executions||{});}catch{notice("Não foi possível importar. Use um cenário ou projeto RTM em JSON.",true);}finally{e.target.value="";}});
+  $("rtm-file").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;if(file.size>360000){notice("Importe um projeto de até 360 KB.",true);return;}try{const data=JSON.parse(await file.text()),scenario=data.scenario||data;$("rtm-editor").value=JSON.stringify(scenario,null,2);setDirty();if(data.executions&&Object.keys(data.executions).length&&!data.scenario_hash)throw new Error("Registros sem identificação do cenário. Importe apenas o cenário para iniciar nova rodada.");await calculate(scenario,data.executions||{},false,data.scenario_hash||null);}catch(error){notice(error.message||"Não foi possível importar. Use um cenário ou projeto RTM em JSON.",true);}finally{e.target.value="";}});
   $("rtm-execution-case").addEventListener("change",loadExecution);
   $("rtm-save-execution").addEventListener("click",()=>{if(dirty)return;const next={...executions,[$("rtm-execution-case").value]:{status:$("rtm-execution-status").value,evidence:$("rtm-evidence").value}};calculate(source,next,true);});
   $("rtm-export-report").addEventListener("click",()=>download("TestingStudio_RTM.md",result.report,"text/markdown;charset=utf-8"));

@@ -21,6 +21,8 @@ def render_traceability():
                 data = json.loads(upload.getvalue())
                 scenario = data.get("scenario", data)
                 imported = analyze_traceability(scenario, data.get("executions"))
+                if data.get("executions") and data.get("scenario_hash") != imported["scenario_hash"]:
+                    raise TraceabilityError("Os registros de execução pertencem a outro cenário ou não possuem sua identificação. Importe o cenário sem registros para iniciar nova rodada.")
                 st.session_state["rtm_source"] = json.dumps(scenario, ensure_ascii=False, indent=2)
                 st.session_state["rtm_result"] = imported
                 st.session_state["rtm_input"] = st.session_state["rtm_source"]
