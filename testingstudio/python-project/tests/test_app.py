@@ -109,3 +109,12 @@ class AppTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertEqual(app.metric[0].value,"6")
         self.assertEqual(app.metric[2].value,"83.3%")
+
+    def test_analysis_entrypoint_opens_full_interface(self):
+        app=AppTest.from_file(str(ROOT / "analysis.py"), default_timeout=20).run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.metric[0].value,"24")
+        app.radio(key="view").set_value("Gemini").run()
+        self.assertFalse(app.exception)
+        self.assertTrue(app.text_input(key="api_key"))
+        self.assertTrue(app.button(key="run_gemini"))

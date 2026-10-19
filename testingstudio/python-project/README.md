@@ -88,7 +88,7 @@ válida, modelo habilitado e cota disponível; as análises locais funcionam ind
 
 O instalador usa pandas 2.3.3 e somente wheels, evitando compilação no laboratório.
 Alternativa: `py -3 launcher.py start`. Em Linux/macOS: `python3 launcher.py start`.
-O ponto de entrada é `app.py`. A interface antiga da Sprint 1 foi preservada em `legacy_sprint1.py`.
+O ponto de entrada recomendado é `app.py`. Para compatibilidade com uma publicação existente, executar `analysis.py` diretamente também abre a interface; importar esse módulo mantém apenas as funções de análise. A interface antiga da Sprint 1 foi preservada em `legacy_sprint1.py`.
 
 Para testar a página web localmente, na raiz do projeto execute:
 

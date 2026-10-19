@@ -248,3 +248,10 @@ Caixa-branca, grafo de fluxo e McCabe ficam para a próxima Sprint, conforme o m
     else:
         report += "Este relatório contém a análise local. Nenhuma resposta real do Gemini está incluída.\nPara completar a demonstração da integração, insira sua chave e execute a auditoria com Gemini.\n"
     return report
+
+
+# Compatibilidade com publicações que selecionaram o módulo de regras como entrada.
+# O ponto de entrada recomendado continua sendo app.py; importar analysis não abre UI.
+if __name__ == "__main__":
+    from studio_app import main
+    main()
