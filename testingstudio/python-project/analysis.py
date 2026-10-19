@@ -252,6 +252,7 @@ Caixa-branca, grafo de fluxo e McCabe ficam para a próxima Sprint, conforme o m
 
 # Compatibilidade com publicações que selecionaram o módulo de regras como entrada.
 # O ponto de entrada recomendado continua sendo app.py; importar analysis não abre UI.
+# A interface completa inclui as referências e a chave do app sem senha de acesso.
 if __name__ == "__main__":
     from studio_app import main
     main()
