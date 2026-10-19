@@ -12,6 +12,7 @@ import streamlit.components.v1 as components
 
 from analysis import ORIGINAL_SHA256, csv_bytes, read_source
 from gemini_service import AuditError, run_gemini
+from gemini_credentials import ensure_key_available
 from project_guide import PROTOCOLS, REQUIREMENTS
 from traceability_ui import render_traceability
 from studio_sidebar import render_sidebar
@@ -202,6 +203,7 @@ def main():
                 st.error("Atualize a análise Python antes de enviar o fonte ao Gemini.")
             else:
                 try:
+                    ensure_key_available(api_key)
                     with st.spinner("Gemini está revisando os três módulos..."):
                         response = run_gemini(api_key, model, st.session_state["analyzed_payload"]["source"], result["source_hash"],
                                               result["null_policy"], result["source_hash"] == ORIGINAL_SHA256,
@@ -215,7 +217,7 @@ def main():
             st.caption("Resposta recebida da API · Modelo solicitado: " + audit["model"])
             st.markdown(audit["text"])
         else:
-            st.info("Insira sua chave na barra lateral para executar a integração. As métricas locais não são uma resposta do Gemini.")
+            st.info("Abra Conexão Gemini na barra lateral: use a chave salva com sua senha ou informe sua própria API Key. As métricas locais não são uma resposta do Gemini.")
     else:
         st.subheader("Do kickoff ao produto")
         frame(REQUIREMENTS, {"page": "Página do PDF", "requirement": "Requisito", "implementation": "Implementação"})

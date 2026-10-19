@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit as st
 
 from gemini_service import DEFAULT_MODEL
+from gemini_credentials import render_key_connection
 
 VIEWS = {
     "Visão geral": "dashboard",
@@ -35,11 +36,10 @@ def render_sidebar():
         st.markdown('<div class="studio-section-label studio-tools-label">FERRAMENTAS</div>', unsafe_allow_html=True)
         with st.expander("Conexão Gemini", icon=":material/auto_awesome:", expanded=view == "Gemini"):
             st.caption("GOOGLE AI STUDIO")
-            api_key = st.text_input("Gemini API Key", type="password", key="api_key", placeholder="Informe sua chave")
+            api_key = render_key_connection()
             model = st.text_input("Modelo Gemini", os.getenv("GEMINI_MODEL", DEFAULT_MODEL), key="model")
             st.link_button("Obter chave no AI Studio", "https://aistudio.google.com/apikey",
                            icon=":material/open_in_new:", width="stretch")
-            st.caption("Chave adicionada nesta sessão." if api_key.strip() else "A chave é usada somente na sua sessão.")
         with st.expander("Parâmetros da análise", icon=":material/tune:"):
             precision = st.selectbox("Casas decimais", ["Automático", "0", "1", "2", "3", "4", "5", "6"], key="precision")
             lower = st.text_input("Limite inferior válido", "0", key="lower")

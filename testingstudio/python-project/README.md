@@ -77,6 +77,34 @@ Não há chave neste repositório. A chave do visitante é usada apenas na sess�
 A versão GitHub Pages não solicita nem armazena chave Gemini. A chamada real exige chave
 válida, modelo habilitado e cota disponível; as análises locais funcionam independentemente da API.
 
+## Guardar a chave Gemini no Streamlit
+
+Em share.streamlit.io, abra o menu do app → Settings → Secrets. Cadastre uma vez:
+
+```toml
+GEMINI_API_KEY = "COLE_SUA_CHAVE_AQUI"
+GEMINI_ACCESS_PASSWORD = "ESCOLHA_UMA_SENHA_FORTE_DE_12_OU_MAIS_CARACTERES"
+```
+
+Salve no painel do Streamlit, nunca no GitHub nem no chat. O exemplo não contém uma
+chave válida. Se já existem outros Secrets, preserve-os e acrescente essas duas entradas
+na raiz do TOML, antes de qualquer cabeçalho de seção `[secao]`.
+
+No app, abra Conexão Gemini → Chave salva no app e digite somente a senha escolhida.
+Ela libera a chave nesta sessão; não é preciso consultar/copiar a API Key novamente.
+A chave fica nos Secrets do servidor, não é preenchida em um campo do navegador e não
+entra nas exportações. Bloquear acesso encerra a autorização desta sessão. Alterar a
+chave ou a senha nos Secrets invalida as autorizações anteriores.
+
+O app público permite usar essa chave somente a quem souber a senha. Essa pessoa
+consome a cota do projeto da chave. Escolha uma senha forte e compartilhe-a apenas com
+quem deve ter esse acesso. Sem senha de pelo menos 12 caracteres, a chave do servidor
+não é liberada. Visitantes podem continuar usando a própria chave, somente por sessão.
+
+Para execução local, os mesmos campos vão em `.streamlit/secrets.toml` no diretório
+em que Streamlit é iniciado; esse arquivo está no `.gitignore`. Os Secrets configurados
+no Community Cloud permanecem nas configurações do app entre sessões e reinicializações.
+
 ## Executar localmente no Windows
 
 1. Tenha Python 3.10+ instalado (testado em Python 3.12; dependências prontas verificadas
