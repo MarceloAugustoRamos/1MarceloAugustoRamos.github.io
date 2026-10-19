@@ -1,7 +1,19 @@
 # TestingStudio Web · v3.0
 
 Laboratório de Teste de Software I (Ementa 62371), Prof. Frank Piffer, 2026.2.
-Tema preto, motor Python, os três módulos do kickoff e a nova Sprint de requisitos e RTM.
+Tema automático, motor Python, os três módulos do kickoff e a nova Sprint de requisitos e RTM.
+
+## Aparência do dispositivo
+
+O modo **Sistema** acompanha a preferência de tema claro/escuro do dispositivo. No
+GitHub Pages, o seletor **Tema** no topo oferece Sistema, Claro e Escuro e salva somente
+essa preferência no navegador. Alterações do dispositivo são aplicadas automaticamente
+enquanto Sistema estiver selecionado.
+
+No Streamlit, abra **⋮ → Theme** e escolha **System**, **Light** ou **Dark**. Os dois
+temas são configurados em `.streamlit/config.toml`; o modo automático é o padrão para
+visitantes sem uma escolha anterior. A configuração é individual por navegador.
+Barra lateral, campos, tabelas e visualizações acompanham o tema ativo.
 
 ## Acesso pela web
 

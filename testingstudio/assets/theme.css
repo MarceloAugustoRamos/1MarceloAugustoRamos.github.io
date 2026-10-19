@@ -1,0 +1,62 @@
+/* The dark theme preserves the original palette; the light theme uses dark accents. */
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme="light"]{color-scheme:light;--bg:#f7f9fc;--panel:#fff;--panel2:#eef3f8;--line:#d1dce5;--text:#182f40;--muted:#526779;--mint:#08734d;--purple:#6350a8;--amber:#90510b;--red:#ae364d}
+.theme-control{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.theme-control select{width:108px;padding:8px 10px;font-size:11px;background:var(--panel);color:var(--text);border-color:var(--line)}
+html[data-theme="light"] .sidebar{background:#f0f4f8}
+html[data-theme="light"] .topbar{background:#fff}
+html[data-theme="light"] .workspace,html[data-theme="light"] .source-bar,html[data-theme="light"] .metric,html[data-theme="light"] .module-card{background:#fff;border-color:var(--line)}
+html[data-theme="light"] .avatar{background:#ece8f7;border-color:#cfc7e8}
+html[data-theme="light"] .brand-icon{border-color:#92b8a3}
+html[data-theme="light"] .nav-item:hover{background:#e6edf3}
+html[data-theme="light"] .nav-item.active{background:#deeee4;border-color:#a0c4b0}
+html[data-theme="light"] .brand small,html[data-theme="light"] .nav-label,html[data-theme="light"] .side-bottom p span,html[data-theme="light"] .side-bottom>a,html[data-theme="light"] .version,html[data-theme="light"] .crumb,html[data-theme="light"] .slash,html[data-theme="light"] .eyebrow,html[data-theme="light"] .heading-badge,html[data-theme="light"] .module-number,html[data-theme="light"] .module-footer{color:#526779}
+html[data-theme="light"] h1 span{color:#597287}
+html[data-theme="light"] .status-pill{color:#526779;border-color:#c3cfdc}
+html[data-theme="light"] .status-pill.ready{color:var(--mint);border-color:#93bea8}
+html[data-theme="light"] .status-pill.running{color:var(--amber);border-color:#d7b37d}
+html[data-theme="light"] .button{background:#eef3f7;color:#243e52}
+html[data-theme="light"] .button:hover{background:#e0e9f0}
+html[data-theme="light"] .button-primary{background:var(--mint);color:#fff;border-color:var(--mint)}
+html[data-theme="light"] .button-primary:hover{background:#075f41}
+html[data-theme="light"] .skip{color:#fff}
+html[data-theme="light"] .file-icon{background:#e8f0fa;border-color:#b8cee3;color:#285c89}
+html[data-theme="light"] .source-label small,html[data-theme="light"] .metric-label,html[data-theme="light"] .metric-foot,html[data-theme="light"] .microcopy,html[data-theme="light"] .subtab,html[data-theme="light"] .detail-inline summary,html[data-theme="light"] .settings-grid>label,html[data-theme="light"] .field-label,html[data-theme="light"] .boundary-point,html[data-theme="light"] footer,html[data-theme="light"] footer .muted{color:#526779}
+html[data-theme="light"] .notice{background:#eaf1f8;color:#36546e;border-color:#c9d9e7}
+html[data-theme="light"] .notice.error{background:#fff0f1;color:var(--red);border-color:#d7a0ab}
+html[data-theme="light"] .notice.success{background:#e7f4ec;color:var(--mint);border-color:#93bea8}
+html[data-theme="light"] .tag{background:#edf2f8;border-color:#c4d2e0;color:#36546e}
+html[data-theme="light"] .mint-tag{background:#e5f3eb;border-color:#b5d6c4;color:var(--mint)}
+html[data-theme="light"] .amber-tag{background:#fff3e1;border-color:#e1c89f;color:var(--amber)}
+html[data-theme="light"] .red-tag{background:#fbecef;border-color:#e1b9c1;color:var(--red)}
+html[data-theme="light"] .steps li>span,html[data-theme="light"] .table-wrap,html[data-theme="light"] .graph-scroll{border-color:var(--line);color:#526779}
+html[data-theme="light"] th{background:#edf2f7;color:#3c556c}
+html[data-theme="light"] td{color:#304b61;border-color:#dbe3eb}
+html[data-theme="light"] tr:hover td{background:#edf4f8}
+html[data-theme="light"] .callout{background:#f0edf9;color:#5b4c88;border-color:#aaa0ce}
+html[data-theme="light"] .formula,html[data-theme="light"] pre{background:#eef3f8;border-color:var(--line);color:#304b61}
+html[data-theme="light"] .formula{color:var(--purple)}
+html[data-theme="light"] .score-bar{background:#dbe6ee}
+html[data-theme="light"] .mutation-line code{color:#526779}
+html[data-theme="light"] textarea,html[data-theme="light"] input,html[data-theme="light"] select{background:#fff;color:#243e52;border-color:#bacbd9}
+html[data-theme="light"] .boundary-viz{background:#f3f7fb;border-color:var(--line)}
+html[data-theme="light"] .boundary-points:before{background:#a1b6c8}
+html[data-theme="light"] .boundary-point .dot{border-color:#b7d9c7}
+html[data-theme="light"] .boundary-point.invalid .dot{border-color:#e4bcc4}
+html[data-theme="light"] .boundary-point strong,html[data-theme="light"] .protocol-list,html[data-theme="light"] .reference-note,html[data-theme="light"] .reference-card p,html[data-theme="light"] .reference-card .reference-citation{color:#304b61}
+html[data-theme="light"] .boundary-region{border-color:var(--line)}
+html[data-theme="light"] .reference-card .microcopy{color:#526779}
+html[data-theme="light"] .reference-id{background:#e5f3eb;border-color:#b5d6c4}
+html[data-theme="light"] .rtm-banner{background:linear-gradient(110deg,#e7f3ec,#fff);border-color:#b5d6c4}
+html[data-theme="light"] .rtm-case h4{color:var(--text)}
+html[data-theme="light"] .rtm-flow,html[data-theme="light"] .rtm-case{border-color:var(--line)}
+html[data-theme="light"] .rtm-link{color:var(--mint)}
+html[data-theme="light"] .rtm-error{color:var(--red)!important}
+html[data-theme="light"] .graph-scroll svg{background:#f3f7fb!important}
+html[data-theme="light"] .graph-scroll rect{fill:#fff}
+html[data-theme="light"] .graph-scroll g text{fill:#243e52}
+html[data-theme="light"] .graph-scroll g text:first-of-type{fill:#526779}
+html[data-theme="light"] .graph-scroll [stroke="#49d7b0"]{stroke:#16825d}
+html[data-theme="light"] .graph-scroll [stroke="#ef9d6c"]{stroke:#a85921}
+@media(max-width:800px){.topbar{height:auto;min-height:70px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px}.top-actions{flex-wrap:wrap;justify-content:flex-end}.theme-control{font-size:10px}.theme-control select{width:94px;font-size:10px}}
+@media print{.theme-control{display:none}}

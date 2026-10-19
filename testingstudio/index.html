@@ -6,7 +6,9 @@
   <meta name="description" content="Laboratório de testes em Python: PCE, AVL, McCabe, Def-Uso e mutação. TestingStudio Web.">
   <title>TestingStudio Web · Laboratório de testes</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/style.css?v=3.0.3">
+  <script src="assets/theme.js?v=3.0.4"></script>
+  <link rel="stylesheet" href="assets/style.css?v=3.0.4">
+  <link rel="stylesheet" href="assets/theme.css?v=3.0.4">
   <script src="assets/python-client.js?v=3.0.3" defer></script><script src="assets/traceability.js?v=3.0.3" defer></script><script src="assets/samples.js?v=3.0.3" defer></script><script src="assets/references.js?v=3.0.3" defer></script><script src="assets/app.js?v=3.0.3" defer></script>
 </head>
 <body>
@@ -28,7 +30,7 @@
   <div class="side-bottom"><div class="runtime-small"><span class="live-dot"></span><strong>Motor Python</strong><small>Executado no seu navegador</small></div><p>Prof. Frank Piffer<br><span>Ementa 62371</span></p><a id="repo-link" href="https://github.com/MarceloAugustoRamos" target="_blank" rel="noopener noreferrer">Código no GitHub ↗</a><span class="version">v3.0 · Nova Sprint RTM</span></div>
 </aside>
 <div class="app-shell">
-  <header class="topbar"><div><span class="crumb">Workspace</span><span class="slash">/</span><strong id="breadcrumb">Visão geral</strong></div><div class="top-actions"><span id="runtime-status" class="status-pill">Exemplo pré-calculado</span><button id="export-report" class="button button-ghost">↓ Exportar relatório</button></div></header>
+  <header class="topbar"><div><span class="crumb">Workspace</span><span class="slash">/</span><strong id="breadcrumb">Visão geral</strong></div><div class="top-actions"><label class="theme-control"><span>Tema</span><select id="theme-preference" aria-label="Tema do site"><option value="system">Sistema</option><option value="light">Claro</option><option value="dark">Escuro</option></select></label><span id="runtime-status" class="status-pill">Exemplo pré-calculado</span><button id="export-report" class="button button-ghost">↓ Exportar relatório</button></div></header>
   <main id="main" tabindex="-1">
     <div class="page-heading"><div><span class="eyebrow">SEU AMBIENTE DE AUDITORIA</span><h1 id="page-title">Código em análise.<br><span>Evidências em mãos.</span></h1><p id="page-description">Entenda os limites, explore os caminhos e descubra o que seus testes deixam passar.</p></div><div class="heading-badge"><span class="live-dot"></span>Python · PCE + AVL + McCabe</div></div>
     <p id="module-sources" class="source-note" hidden><span id="module-source-text"></span> <button class="source-note-link" data-view="references">Consultar referências ↗</button></p>

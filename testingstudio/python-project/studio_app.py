@@ -8,7 +8,6 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-import streamlit.components.v1 as components
 
 from analysis import ORIGINAL_SHA256, csv_bytes, read_source
 from gemini_service import AuditError, run_gemini
@@ -50,10 +49,10 @@ def boundary_plot(result, zoom=False):
                               mode="markers+text", text=labels, textposition="top center",
                               customdata=[row["display"] for row in rows],
                               hovertemplate="Valor: %{customdata}<extra></extra>",
-                              marker={"size": 16, "color": ["#79e3bb" if r["valid"] else "#f18e98" for r in rows]}))
+                              marker={"size": 16, "color": ["#16825d" if r["valid"] else "#c24b62" for r in rows]}))
     padding = epsilon * 1.7 if zoom else 135
     fig.add_vline(x=lower, line_dash="dash", line_color="#7081a0")
-    fig.update_layout(template="plotly_dark", paper_bgcolor="#10141c", plot_bgcolor="#10141c",
+    fig.update_layout(template="none", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                       height=260, margin={"l": 15, "r": 15, "t": 40, "b": 35},
                       xaxis={"range": [lower-padding, lower+padding], "title": "Valor de entrada"},
                       yaxis={"visible": False, "range": [0.7, 1.6]},
@@ -64,11 +63,18 @@ def boundary_plot(result, zoom=False):
 def main():
     st.set_page_config(page_title="TestingStudio Web", page_icon="🧪", layout="wide")
     st.markdown('''<style>
-    .stApp,[data-testid="stAppViewContainer"]{background:#07090d;color:#edf2fb}
+    .stApp,[data-testid="stAppViewContainer"]{background:light-dark(#f7f9fc,#07090d);color:light-dark(#182f40,#edf2fb)}
     .block-container{max-width:1350px;padding-top:2rem}
     h1{letter-spacing:-1.2px}h2,h3{letter-spacing:-.4px}
-    [data-testid="stMetric"]{background:#10141c;border:1px solid #293247;border-radius:12px;padding:17px}
-    [data-testid="stMetricValue"]{color:#79e3bb}
+    [data-testid="stMetric"]{background:light-dark(#ffffff,#10141c);border:1px solid light-dark(#d1dce5,#293247);border-radius:12px;padding:17px}
+    [data-testid="stMetricValue"]{color:light-dark(#08734d,#79e3bb)}
+    .studio-flow-graph{max-height:620px;overflow:auto;border:1px solid light-dark(#d1dce5,#293247);border-radius:10px}
+    .studio-flow-graph svg{display:block;width:100%;min-width:650px;background:light-dark(#f8fafc,#0c1018)!important}
+    .studio-flow-graph rect{fill:light-dark(#ffffff,#131c2a)}
+    .studio-flow-graph g text{fill:light-dark(#243e52,#edf4ff)}
+    .studio-flow-graph g text:first-of-type{fill:light-dark(#52697b,#9baaca)}
+    .studio-flow-graph [stroke="#49d7b0"]{stroke:light-dark(#16825d,#49d7b0)}
+    .studio-flow-graph [stroke="#ef9d6c"]{stroke:light-dark(#a85921,#ef9d6c)}
     textarea{font-family:Consolas,monospace!important}
     </style>''', unsafe_allow_html=True)
     try:
@@ -166,7 +172,7 @@ def main():
         st.subheader("Grafo de Fluxo de Controle")
         st.code(flow["formula"], language=None)
         st.caption(f"Conferência: predicados + 1 = {flow['predicate_check']}. {flow['convention']}")
-        components.html('<html><body style="margin:0;background:#0c1018">' + result["graph_svg"] + '</body></html>', height=620, scrolling=True)
+        st.html('<div class="studio-flow-graph">' + result["graph_svg"] + '</div>')
         st.download_button("Baixar grafo (.svg)", result["graph_svg"].encode(), "TestingStudio_Grafo.svg", "image/svg+xml")
         with st.expander("Nós, definições e usos"):
             frame(flow["nodes"])

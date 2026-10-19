@@ -59,6 +59,9 @@ def render_sidebar():
                                        format_func=lambda x: "Regra CAD0001 do manual" if x == "cad0001" else "Apenas comparação diferencial", key="oracle_mode")
             equivalents = st.text_input("Mutantes equivalentes confirmados", key="equivalents", placeholder="M02, M05")
             st.caption("Declare equivalência após revisão humana. Mutantes mortos não podem ser excluídos.")
+        with st.expander("Aparência", icon=":material/contrast:"):
+            st.write("O modo **System (Sistema)** acompanha o tema claro ou escuro do seu dispositivo.")
+            st.caption("Para escolher: abra ⋮ no canto superior direito e selecione System, Light (Claro) ou Dark (Escuro). A escolha fica neste navegador.")
         st.markdown('''<div class="studio-sidebar-footer"><span class="studio-engine-dot" aria-hidden="true"></span>
           <div><strong>Motor Python</strong><span>Teste de Software I · Ementa 62371</span></div></div>
           <div class="studio-sidebar-credit">Prof. Frank Piffer <span>·</span> v3.0</div>''', unsafe_allow_html=True)
