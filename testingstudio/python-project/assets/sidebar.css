@@ -19,6 +19,7 @@
 .studio-section-label {font-size:9px;letter-spacing:1.65px;font-weight:650;color:#63758d;margin:0 11px 4px}
 /* Padding keeps the heading inside Streamlit's measured block height. */
 .studio-tools-label {margin:0 11px;padding:20px 0 4px;line-height:16px}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"]:has(> .studio-tools-label) {margin-bottom:0}
 [data-testid="stSidebar"] [data-testid="stRadio"] {width:100%;padding:0}
 [data-testid="stSidebar"] [data-testid="stRadioGroup"] {width:100%;gap:5px}
 [data-testid="stSidebar"] [data-testid="stRadioGroup"]>div {width:100%;margin:0;padding:0}
