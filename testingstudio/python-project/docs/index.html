@@ -6,8 +6,8 @@
   <meta name="description" content="Laboratório de testes em Python: PCE, AVL, McCabe, Def-Uso e mutação. TestingStudio Web.">
   <title>TestingStudio Web · Laboratório de testes</title>
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/style.css?v=3.0.2">
-  <script src="assets/python-client.js?v=3.0.2" defer></script><script src="assets/traceability.js?v=3.0.2" defer></script><script src="assets/samples.js?v=3.0.2" defer></script><script src="assets/app.js?v=3.0.2" defer></script>
+  <link rel="stylesheet" href="assets/style.css?v=3.0.3">
+  <script src="assets/python-client.js?v=3.0.3" defer></script><script src="assets/traceability.js?v=3.0.3" defer></script><script src="assets/samples.js?v=3.0.3" defer></script><script src="assets/references.js?v=3.0.3" defer></script><script src="assets/app.js?v=3.0.3" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -23,6 +23,7 @@
     <button class="nav-item" data-view="traceability"><span class="nav-icon">⊞</span>Requisitos e RTM<span class="nav-index">04</span></button>
     <button class="nav-item" data-view="gemini"><span class="nav-icon">✧</span>Assistente Gemini</button>
     <button class="nav-item" data-view="delivery"><span class="nav-icon">↗</span>Entrega e projeto</button>
+    <button class="nav-item" data-view="references"><span class="nav-icon" aria-hidden="true">▤</span>Fontes e referências</button>
   </nav>
   <div class="side-bottom"><div class="runtime-small"><span class="live-dot"></span><strong>Motor Python</strong><small>Executado no seu navegador</small></div><p>Prof. Frank Piffer<br><span>Ementa 62371</span></p><a id="repo-link" href="https://github.com/MarceloAugustoRamos" target="_blank" rel="noopener noreferrer">Código no GitHub ↗</a><span class="version">v3.0 · Nova Sprint RTM</span></div>
 </aside>
@@ -30,6 +31,7 @@
   <header class="topbar"><div><span class="crumb">Workspace</span><span class="slash">/</span><strong id="breadcrumb">Visão geral</strong></div><div class="top-actions"><span id="runtime-status" class="status-pill">Exemplo pré-calculado</span><button id="export-report" class="button button-ghost">↓ Exportar relatório</button></div></header>
   <main id="main" tabindex="-1">
     <div class="page-heading"><div><span class="eyebrow">SEU AMBIENTE DE AUDITORIA</span><h1 id="page-title">Código em análise.<br><span>Evidências em mãos.</span></h1><p id="page-description">Entenda os limites, explore os caminhos e descubra o que seus testes deixam passar.</p></div><div class="heading-badge"><span class="live-dot"></span>Python · PCE + AVL + McCabe</div></div>
+    <p id="module-sources" class="source-note" hidden><span id="module-source-text"></span> <button class="source-note-link" data-view="references">Consultar referências ↗</button></p>
     <section class="source-bar" aria-label="Unidade em análise"><div class="source-label"><span class="file-icon">&lt;/&gt;</span><div><strong id="unit-name">CAD0001 · Função de cálculo</strong><small id="unit-meta">Informix-4GL · Adaptador Python</small></div></div><div class="source-actions"><button class="button button-ghost" id="toggle-editor" aria-expanded="false" aria-controls="code-editor">Editar código</button><button class="button button-primary" id="run-analysis">▶ Analisar em Python</button></div></section>
     <div id="notice" class="notice" role="status" aria-live="polite">Você está vendo a análise de exemplo do CAD0001. Clique em “Analisar em Python” para executar o motor neste navegador.</div>
     <section id="code-editor" class="panel editor-panel" hidden>
@@ -78,6 +80,12 @@
     <section class="view" id="view-gemini" aria-label="Assistente Gemini" hidden><section class="panel gemini-panel"><span class="module-symbol purple">✧</span><h2>Uma segunda leitura do seu código.</h2><p>O assistente interpreta requisitos em linguagem natural e revisa as evidências dos três módulos.</p><div class="callout">A integração Gemini é executada no servidor Streamlit. Sua chave não é colocada no GitHub nem nesta página pública.</div><div class="server-config"><label class="field-label" for="cloud-url">Endereço do seu app Streamlit hospedado</label><input id="cloud-url" type="url" placeholder="https://seu-app.streamlit.app"><button id="open-cloud" class="button button-primary">Abrir versão com Gemini ↗</button><p class="microcopy" id="cloud-status">Publique o app.py do projeto no Streamlit Community Cloud e informe o endereço acima. O motor local dos três módulos funciona sem API.</p></div><label class="field-label" for="requirements-nlp">Requisitos que você quer discutir com o Gemini</label><textarea id="requirements-nlp" class="short-editor" placeholder="Ex.: Os parâmetros não podem ser negativos. Explique as classes, os limites e as falhas encontradas."></textarea><button id="download-prompt" class="button button-ghost">↓ Baixar contexto para a revisão</button></section></section>
 
     <section class="view" id="view-delivery" aria-label="Entrega e projeto" hidden><div class="panel"><div class="panel-head"><div><h2>Do kickoff ao produto</h2><p>Rastreabilidade do kickoff e da nova Sprint de casos de teste e RTM.</p></div><span class="tag mint-tag">3 módulos</span></div><div id="requirements-table"></div></div><div class="overview-bottom"><section class="panel"><div class="panel-head"><h2>Protocolos do laboratório</h2></div><ol id="protocols" class="protocol-list"></ol></section><section class="panel"><div class="panel-head"><h2>Entrega e versionamento</h2></div><p>Revise os resultados, registre as mudanças no GitHub e prepare sua demonstração dentro do prazo da Sprint.</p><div class="export-grid"><button id="export-json" class="button button-ghost">↓ Auditoria JSON</button><button id="export-report-2" class="button button-primary">↓ Relatório Markdown</button></div><p class="microcopy">O código e os exemplos são públicos. O fonte que você digita fica nesta aba; não é enviado ao GitHub. A análise determinística ocorre localmente.</p></section></div><details class="panel detail-panel"><summary>Limitações e método</summary><ul id="method-warnings"></ul></details></section>
+    <section class="view" id="view-references" aria-label="Fontes e referências" hidden>
+      <div class="reference-intro panel"><div class="panel-head"><div><span class="eyebrow">ORIGEM DO CONTEÚDO</span><h2>Uma base que você pode conferir.</h2><p id="references-date"></p></div><button id="download-references" class="button button-primary">↓ Baixar referências (.md)</button></div><p id="references-note" class="reference-note"></p></div>
+      <section class="panel"><div class="panel-head"><div><h2>Qual fonte sustenta cada módulo?</h2><p>Os identificadores abaixo correspondem às referências completas desta página.</p></div></div><div id="references-map"></div></section>
+      <div id="references-catalog"></div>
+      <p class="microcopy">Os PDFs de aula são identificados por arquivo e páginas, sem redistribuição dos materiais. Referências acadêmicas podem exigir acesso institucional ao texto integral.</p>
+    </section>
     <footer><span>TestingStudio Web <span class="muted">/ Laboratório de Teste de Software I</span></span><span>Python por dentro. Evidências por fora.</span></footer>
   </main>
 </div>

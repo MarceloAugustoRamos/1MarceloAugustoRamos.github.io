@@ -17,6 +17,7 @@ VIEWS = {
     "Requisitos e RTM": "grid_view",
     "Gemini": "auto_awesome",
     "Entrega": "folder_open",
+    "Fontes e referências": "menu_book",
 }
 
 

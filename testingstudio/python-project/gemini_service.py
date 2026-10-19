@@ -107,7 +107,7 @@ def error_message(error: Exception) -> str:
     code = getattr(error, "code", None)
     messages = {
         400: "Solicitação recusada. Confira a chave, o modelo e a disponibilidade da API na sua conta.",
-        401: "HTTP 401 · O Google recusou a API key. A senha de acesso do app não é a API key. Confira GEMINI_API_KEY nos Secrets ou teste a opção Informar minha chave. Se a chave também falhar manualmente, confira se está válida e ativa no Google AI Studio.",
+        401: "HTTP 401 · O Google recusou a API key. Confira GEMINI_API_KEY nos Secrets ou teste a opção Informar minha chave. Se a chave também falhar manualmente, confira se está válida e ativa no Google AI Studio.",
         403: "Acesso recusado. Confira a chave e as permissões do projeto no Google AI Studio.",
         404: "Modelo indisponível para sua conta. Informe na barra lateral um modelo habilitado no AI Studio.",
         429: "HTTP 429 · Limite de uso ou cota atingido. Consulte os limites do projeto no AI Studio e aguarde a renovação do limite atingido. Gerar outra chave do mesmo projeto não renova a cota. As análises Python continuam disponíveis.",

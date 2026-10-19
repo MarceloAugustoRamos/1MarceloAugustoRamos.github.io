@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from traceability import LIBRARY_SCENARIO, STATUSES, TraceabilityError, analyze_traceability
+from bibliography import references_markdown
 
 
 def render_traceability():
@@ -116,7 +117,7 @@ def render_traceability():
     st.divider()
     st.caption("Exporte para guardar cenário e registros; os dados ficam na sessão até a exportação.")
     cols = st.columns(3)
-    cols[0].download_button("Relatório RTM (.md)", result["report"].encode(), "TestingStudio_RTM.md", "text/markdown")
+    cols[0].download_button("Relatório RTM (.md)", (result["report"] + "\n\n" + references_markdown()).encode(), "TestingStudio_RTM.md", "text/markdown")
     cols[1].download_button("Matriz RTM (.csv)", result["matrix_csv"].encode(), "TestingStudio_Matriz_RTM.csv", "text/csv")
     project = {"schema_version": 1, "scenario": result["scenario"], "scenario_hash": result["scenario_hash"],
                "executions": {c["id"]: {"status": c["status"], "evidence": c["evidence"]} for c in result["cases"]}}

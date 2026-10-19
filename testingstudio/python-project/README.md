@@ -79,47 +79,46 @@ válida, modelo habilitado e cota disponível; as análises locais funcionam ind
 
 ## Guardar a chave Gemini no Streamlit
 
-Em share.streamlit.io, abra o menu do app → Settings → Secrets. Cadastre uma vez:
+Em share.streamlit.io, abra o menu do app → Settings → Secrets. Configure uma vez:
 
 ```toml
 GEMINI_API_KEY = "COLE_SUA_CHAVE_AQUI"
-GEMINI_ACCESS_PASSWORD = "ESCOLHA_UMA_SENHA_FORTE_DE_12_OU_MAIS_CARACTERES"
 ```
 
-Salve no painel do Streamlit, nunca no GitHub nem no chat. O exemplo não contém uma
-chave válida. Se já existem outros Secrets, preserve-os e acrescente essas duas entradas
-na raiz do TOML, antes de qualquer cabeçalho de seção `[secao]`.
+Substitua o exemplo pela chave real, mantendo as aspas. A entrada deve ficar na raiz do
+TOML, antes de qualquer cabeçalho de seção. Preserve outros Secrets existentes. Salve
+no painel do Streamlit, nunca no GitHub nem no chat. Se necessário, use Reboot no
+painel do app para recarregar a configuração no servidor.
 
-No app, abra Conexão Gemini → Chave salva no app e digite somente a senha escolhida.
-Ela libera a chave nesta sessão; não é preciso consultar/copiar a API Key novamente.
-A chave fica nos Secrets do servidor, não é preenchida em um campo do navegador e não
-entra nas exportações. Bloquear acesso encerra a autorização desta sessão. Alterar a
-chave ou a senha nos Secrets invalida as autorizações anteriores.
+A opção **Chave salva no app** fica disponível sem senha, inclusive para a avaliação
+do professor em outro computador. A chave permanece no servidor: não é preenchida em
+widget do navegador nem incluída nos relatórios. Qualquer visitante pode usar a
+integração e consumir a cota do projeto. O campo antigo `GEMINI_ACCESS_PASSWORD`, caso
+continue nos Secrets, não é lido nem exigido. A opção **Informar minha chave** permite
+usar uma chave própria somente na sessão.
 
-Liberar a chave com a senha não valida a autenticação no Google. Em Conexão Gemini,
-use **Verificar chave e modelo**: essa ação consulta somente os metadados do modelo,
-sem gerar uma auditoria. A consulta bem-sucedida não garante cota para gerar conteúdo.
-Nenhuma chamada é feita automaticamente ao abrir a página ou desbloquear a chave.
-Cada ação faz uma tentativa, sem repetições automáticas do SDK.
+**Verificar chave e modelo** consulta os metadados do modelo sem gerar uma auditoria.
+Esse resultado não garante cota para gerar conteúdo. Abrir a página não faz uma chamada
+Gemini automaticamente. Cada ação faz uma tentativa, sem repetições automáticas do SDK.
 
-Se aparecer **HTTP 401**, selecione **Informar minha chave** e verifique a mesma chave
-uma vez. Se funcionar, atualize `GEMINI_API_KEY` nos Secrets, salve, recarregue o app e
-desbloqueie novamente. Se também falhar manualmente, confira no AI Studio se a chave
-está ativa; substitua uma chave inválida, revogada ou bloqueada. A senha de acesso do
-app não substitui a API key. No campo manual, cole somente a chave sem aspas; nos
-Secrets, as aspas delimitam a string TOML.
+Se aparecer **HTTP 401**, compare o valor de `GEMINI_API_KEY` com a chave que funciona
+na opção manual. Atualize os Secrets, salve e reinicie o app. Se também falhar
+manualmente, confira no AI Studio se a chave está ativa. **HTTP 429** indica limite ou
+cota: consulte os limites do projeto no AI Studio. Outra chave do mesmo projeto não
+renova a cota. O motor Python continua disponível sem Gemini.
 
-**HTTP 429** indica limite/cota do projeto: consulte os limites ativos no AI Studio.
-Trocar a chave do mesmo projeto não renova a cota. O motor Python funciona sem Gemini.
+Para execução local, configure `.streamlit/secrets.toml` no diretório de execução;
+esse arquivo é ignorado pelo Git. Os Secrets do Community Cloud permanecem no painel.
 
-O app público permite usar essa chave somente a quem souber a senha. Essa pessoa
-consome a cota do projeto da chave. Escolha uma senha forte e compartilhe-a apenas com
-quem deve ter esse acesso. Sem senha de pelo menos 12 caracteres, a chave do servidor
-não é liberada. Visitantes podem continuar usando a própria chave, somente por sessão.
+## Fontes e referências
 
-Para execução local, os mesmos campos vão em `.streamlit/secrets.toml` no diretório
-em que Streamlit é iniciado; esse arquivo está no `.gitignore`. Os Secrets configurados
-no Community Cloud permanecem nas configurações do app entre sessões e reinicializações.
+A seção **Fontes e referências** está disponível no GitHub Pages e no Streamlit, com
+materiais da disciplina, referências acadêmicas de apoio e documentação técnica. Cada
+módulo indica os identificadores das fontes correspondentes. Os relatórios Markdown
+de análise e RTM incluem a bibliografia; a lista também pode ser baixada separadamente.
+O catálogo central fica em `bibliography.py`. Materiais efetivamente usados nos
+exercícios são diferenciados das referências complementares verificadas nesta revisão.
+Os PDFs de aula são identificados por nome e páginas, sem redistribuição automática.
 
 ## Executar localmente no Windows
 

@@ -17,6 +17,8 @@ from project_guide import PROTOCOLS, REQUIREMENTS
 from traceability_ui import render_traceability
 from studio_sidebar import render_sidebar
 from studio_engine import AnalysisError, CORRECTED_SAMPLE, analyze, report_markdown
+from bibliography import MODULE_SOURCES, references_markdown
+from bibliography_ui import render_references
 
 
 def signature(payload):
@@ -80,6 +82,11 @@ def main():
     view, precision, lower, null_policy, oracle_mode, equivalents, api_key, model = render_sidebar()
 
     st.caption("WORKSPACE / " + view.upper())
+    if view == "Fontes e referências":
+        render_references()
+        return
+    if view in MODULE_SOURCES:
+        st.caption("Fontes deste módulo: " + ", ".join(MODULE_SOURCES[view]) + ". Consulte Fontes e referências no menu.")
     if view == "Requisitos e RTM":
         render_traceability()
         return
@@ -217,7 +224,7 @@ def main():
             st.caption("Resposta recebida da API · Modelo solicitado: " + audit["model"])
             st.markdown(audit["text"])
         else:
-            st.info("Abra Conexão Gemini na barra lateral: use a chave salva com sua senha ou informe sua própria API Key. As métricas locais não são uma resposta do Gemini.")
+            st.info("Abra Conexão Gemini na barra lateral: use a chave do app sem senha ou informe sua própria API Key. As métricas locais não são uma resposta do Gemini.")
     else:
         st.subheader("Do kickoff ao produto")
         frame(REQUIREMENTS, {"page": "Página do PDF", "requirement": "Requisito", "implementation": "Implementação"})
@@ -232,6 +239,7 @@ def main():
     report = report_markdown(result)
     if st.session_state.get("gemini_audit"):
         report += "\n## Revisão Gemini\n\n" + st.session_state["gemini_audit"]["text"]
+    report += "\n\n" + references_markdown()
     st.divider()
     col1, col2 = st.columns(2)
     col1.download_button("Baixar relatório completo (.md)", report.encode(), "TestingStudio_Relatorio.md", "text/markdown", key="download_report")
