@@ -8,6 +8,7 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 
 from analysis import ORIGINAL_SHA256, csv_bytes, read_source
 from gemini_service import AuditError, run_gemini
@@ -68,13 +69,6 @@ def main():
     h1{letter-spacing:-1.2px}h2,h3{letter-spacing:-.4px}
     [data-testid="stMetric"]{background:light-dark(#ffffff,#10141c);border:1px solid light-dark(#d1dce5,#293247);border-radius:12px;padding:17px}
     [data-testid="stMetricValue"]{color:light-dark(#08734d,#79e3bb)}
-    .studio-flow-graph{max-height:620px;overflow:auto;border:1px solid light-dark(#d1dce5,#293247);border-radius:10px}
-    .studio-flow-graph svg{display:block;width:100%;min-width:650px;background:light-dark(#f8fafc,#0c1018)!important}
-    .studio-flow-graph rect{fill:light-dark(#ffffff,#131c2a)}
-    .studio-flow-graph g text{fill:light-dark(#243e52,#edf4ff)}
-    .studio-flow-graph g text:first-of-type{fill:light-dark(#52697b,#9baaca)}
-    .studio-flow-graph [stroke="#49d7b0"]{stroke:light-dark(#16825d,#49d7b0)}
-    .studio-flow-graph [stroke="#ef9d6c"]{stroke:light-dark(#a85921,#ef9d6c)}
     textarea{font-family:Consolas,monospace!important}
     </style>''', unsafe_allow_html=True)
     try:
@@ -172,7 +166,15 @@ def main():
         st.subheader("Grafo de Fluxo de Controle")
         st.code(flow["formula"], language=None)
         st.caption(f"Conferência: predicados + 1 = {flow['predicate_check']}. {flow['convention']}")
-        st.html('<div class="studio-flow-graph">' + result["graph_svg"] + '</div>')
+        graph_style = '''<style>
+          body{margin:0;background:#0c1018}svg{display:block;width:100%;min-width:650px}
+          @media(prefers-color-scheme:light){
+            body,svg{background:#f8fafc!important}rect{fill:#fff}
+            g text{fill:#243e52}g text:first-of-type{fill:#52697b}
+            [stroke="#49d7b0"]{stroke:#16825d}[stroke="#ef9d6c"]{stroke:#a85921}
+          }
+        </style>'''
+        components.html('<html><head>' + graph_style + '</head><body>' + result["graph_svg"] + '</body></html>', height=620, scrolling=True)
         st.download_button("Baixar grafo (.svg)", result["graph_svg"].encode(), "TestingStudio_Grafo.svg", "image/svg+xml")
         with st.expander("Nós, definições e usos"):
             frame(flow["nodes"])
