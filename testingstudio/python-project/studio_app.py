@@ -14,6 +14,7 @@ import streamlit.components.v1 as components
 from analysis import ORIGINAL_SHA256, csv_bytes, read_source
 from gemini_service import DEFAULT_MODEL, AuditError, run_gemini
 from project_guide import PROTOCOLS, REQUIREMENTS
+from traceability_ui import render_traceability
 from studio_engine import AnalysisError, CORRECTED_SAMPLE, analyze, report_markdown
 
 
@@ -78,8 +79,8 @@ def main():
         st.session_state["source_editor"] = original
     with st.sidebar:
         st.title("🧪 TestingStudio")
-        st.caption("WEB LABORATORY · v2.0")
-        view = st.radio("Laboratório", ["Visão geral", "Caixa-preta", "Caixa-branca", "Def-Uso e mutação", "Gemini", "Entrega"], key="view")
+        st.caption("WEB LABORATORY · v3.0")
+        view = st.radio("Laboratório", ["Visão geral", "Caixa-preta", "Caixa-branca", "Def-Uso e mutação", "Requisitos e RTM", "Gemini", "Entrega"], key="view")
         st.divider()
         st.subheader("Configuração da análise")
         precision = st.selectbox("Casas decimais", ["Automático", "0", "1", "2", "3", "4", "5", "6"], key="precision")
@@ -101,6 +102,9 @@ def main():
         st.caption("Teste de Software I · Ementa 62371\n\nProf. Frank Piffer · 2026.2")
 
     st.caption("WORKSPACE / " + view.upper())
+    if view == "Requisitos e RTM":
+        render_traceability()
+        return
     st.title("Código em análise. Evidências em mãos.")
     st.write("PCE e AVL, grafo de controle, Def-Uso e mutação no mesmo laboratório Python.")
     with st.expander("Unidade de código · editar ou carregar exemplo", expanded=False):

@@ -7,6 +7,12 @@ const {loadPyodide} = require('pyodide');
   const python=await loadPyodide();
   python.FS.writeFile('/home/pyodide/analysis.py',fs.readFileSync(path.join(root,'analysis.py'),'utf8'));
   await python.runPythonAsync(fs.readFileSync(path.join(root,'studio_engine.py'),'utf8'));
+  python.FS.writeFile('/home/pyodide/traceability.py',fs.readFileSync(path.join(root,'traceability.py'),'utf8'));
+  await python.runPythonAsync('from traceability import LIBRARY_SCENARIO, browser_traceability');
+  const rtm=JSON.parse(await python.runPythonAsync('browser_traceability(json.dumps({"scenario":LIBRARY_SCENARIO}))'));
+  assert.equal(rtm.ok,true);assert.equal(rtm.result.coverage,100);assert.equal(rtm.result.cases.length,5);assert.equal(rtm.result.execution.executed,0);
+  assert.deepEqual(rtm.result.cases.find(c=>c.id==='CT01').requirements,['REQ01','REQ04','REQ05']);
+  console.log('WASM RTM: 5 requisitos, 5 CTs, cobertura planejada 100%, nenhuma execução inventada.');
   const samples={original:fs.readFileSync(path.join(root,'cad0001_item_calculo.txt'),'utf8'),corrected:python.globals.get('CORRECTED_SAMPLE')};
   for(const [name,source] of Object.entries(samples)){
     python.globals.set('_test_request',JSON.stringify({source}));

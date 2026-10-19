@@ -23,7 +23,7 @@ class AppTests(unittest.TestCase):
 
     def test_all_modules_render(self):
         app=self.app()
-        for view in ["Caixa-preta","Caixa-branca","Def-Uso e mutação","Entrega","Gemini"]:
+        for view in ["Caixa-preta","Caixa-branca","Def-Uso e mutação","Entrega","Gemini","Requisitos e RTM"]:
             app.radio(key="view").set_value(view).run()
             with self.subTest(view=view):
                 self.assertFalse(app.exception)
@@ -94,3 +94,18 @@ class AppTests(unittest.TestCase):
             app.button(key="run_gemini").click().run()
         self.assertIn("studio_result",api.call_args.kwargs)
         self.assertNotIn("segredo-ficticio",str(app.session_state["studio_result"]))
+
+    def test_rtm_derives_new_requirements_and_marks_stale(self):
+        import json
+        from traceability import LIBRARY_SCENARIO
+        app=self.app().radio(key="view").set_value("Requisitos e RTM").run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.metric[2].value,"100.0%")
+        scenario=json.loads(json.dumps(LIBRARY_SCENARIO))
+        scenario["requirements"].append({"id":"REQ06","description":"Nova regra sem caso."})
+        app.text_area(key="rtm_source").set_value(json.dumps(scenario)).run()
+        self.assertTrue(any("Cenário editado" in item.value for item in app.warning))
+        app.button(key="rtm_derive").click().run()
+        self.assertFalse(app.exception)
+        self.assertEqual(app.metric[0].value,"6")
+        self.assertEqual(app.metric[2].value,"83.3%")

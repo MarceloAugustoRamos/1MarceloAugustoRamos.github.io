@@ -1,7 +1,7 @@
-# TestingStudio Web · v2.0
+# TestingStudio Web · v3.0
 
 Laboratório de Teste de Software I (Ementa 62371), Prof. Frank Piffer, 2026.2.
-Tema preto, motor Python e os três módulos do kickoff.
+Tema preto, motor Python, os três módulos do kickoff e a nova Sprint de requisitos e RTM.
 
 ## Acesso pela web
 
@@ -28,6 +28,34 @@ O código digitado não é enviado ao GitHub. A análise determinística acontec
 O PDF apresenta os módulos 2 e 3 como evolução do produto. Eles já estão disponíveis
 nesta versão, dentro do subconjunto de linguagem descrito abaixo. A página final de
 agradecimento não cria um requisito de software adicional.
+
+## Nova Sprint · Derivação de CTs e RTM (14/10/2026)
+
+Abra **Requisitos e RTM** no menu da página ou do app Streamlit. O exemplo contém os
+cinco requisitos da biblioteca universitária do PDF, três casos de uso, fluxos principal,
+alternativo e de exceção, passos, pré-condições, dados e resultados esperados.
+
+O rastreio da aula foi preservado: CT01 → REQ01/REQ04/REQ05; CT02 → REQ02;
+CT03 → REQ03. CT04 (categoria) e CT05 (sem pendências) são extensões propostas.
+A multa tem exemplos de 0, 1 e 2 dias: R$ 0,00, R$ 2,00 e R$ 4,00. Regras não
+especificadas, como dias parciais, validação de ISBN e falha do e-mail, estão sinalizadas
+para refinamento; não foram inventadas como exigências da aula.
+
+Edite ou importe o cenário em JSON e clique em **Derivar CTs e RTM em Python**.
+O motor deriva um CT de cada fluxo estruturado. Não interpreta texto livre automaticamente.
+A matriz mostra requisito → CT e CT → requisito, requisitos sem cobertura e CTs órfãos.
+IDs duplicados e vínculos inexistentes são recusados.
+
+**Cobertura planejada de 100% não significa testes executados.** Todos começam como
+Não executado. Registre Aprovado, Reprovado ou Bloqueado com evidência/justificativa
+após testar o sistema sob teste. Bloqueados não contam como executados. O laboratório
+não implementa a biblioteca nem envia e-mails. A edição do cenário reinicia a rodada
+para evitar reutilizar resultados de outra especificação.
+
+Exporte relatório Markdown, matriz CSV ou projeto JSON com os registros para continuar
+outra sessão. Os dados permanecem na aba/sessão até a exportação; não há banco remoto.
+O módulo é Python puro (`traceability.py`), compartilhado entre Streamlit e Pyodide.
+Veja `entrega/SPRINT_RTM.md` e `entrega/cenario_biblioteca.json`.
 
 ## Python e Gemini no servidor
 
@@ -154,6 +182,7 @@ rode `python scripts/build_pages.py` para atualizar a página.
 - `studio_engine.py`: motor restrito de PCE/AVL, GFC, Def-Uso e mutação.
 - `analysis.py`: regras e casos CAD0001, Decimal e exportações da Sprint 1.
 - `gemini_service.py`: SDK e prompt integrado, sem credencial embutida.
+- `traceability.py`, `traceability_ui.py`: derivação de CTs, RTM e registro manual de resultados.
 - `project_guide.py`: rastreabilidade do kickoff e protocolos do laboratório.
 - `docs/`: página GitHub Pages, worker e cópias geradas do motor.
 - `scripts/`: build da página e teste WASM.

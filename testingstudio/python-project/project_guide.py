@@ -1,6 +1,7 @@
 """Rastreabilidade das onze páginas do kickoff para funcionalidades do produto."""
 
 REQUIREMENTS = [
+    {"page": "Nova aula 3–6", "requirement": "Derivação de CTs e RTM bidirecional", "implementation": "Requisitos e RTM: cenário da biblioteca, casos de uso, três tipos de fluxo, CTs, cobertura, lacunas e registros manuais com evidência."},
     {"page": "1–2", "requirement": "Auditor web: Python + Streamlit + Gemini", "implementation": "Motor Python compartilhado, app Streamlit e adaptador Gemini no servidor."},
     {"page": "3", "requirement": "Escopo evolutivo, prazos e integração contínua", "implementation": "Três módulos, documentação de versões e workflow de testes/publicação."},
     {"page": "4–5", "requirement": "PCE, AVL e cálculo algorítmico de épsilon", "implementation": "Classes, casos por parâmetro, ε = 10⁻ᵈ, fronteira e precisão configuráveis."},
