@@ -69,6 +69,7 @@ def main():
     h1{letter-spacing:-1.2px}h2,h3{letter-spacing:-.4px}
     [data-testid="stMetric"]{background:light-dark(#ffffff,#10141c);border:1px solid light-dark(#d1dce5,#293247);border-radius:12px;padding:17px}
     [data-testid="stMetricValue"]{color:light-dark(#08734d,#79e3bb)}
+    [data-testid="stIFrame"]{color-scheme:inherit!important}
     textarea{font-family:Consolas,monospace!important}
     </style>''', unsafe_allow_html=True)
     try:
